@@ -20,7 +20,6 @@ function dashboard() {
             selectButton.append("option").attr("value",name).text(name);
         });
         
-        // for sample charts and info table
         let selectedID = selectIDs[0];
         // console.log(selectedID);
 
@@ -62,7 +61,6 @@ function hbarChart(inputID) {
 
         let layout = {
             automargin: true
-
         }
 
         let traceData = [traceSample];
@@ -158,62 +156,6 @@ function demoInfo(inputID) {
     });
 }
 
-// BONUS part
-function gaugeChart(inputID) {
-    
-    d3.json(url).then(function(data) {
-        // console.log(data);
-
-        let metaData = data.metadata;
-
-        function selectSample(sample) {
-            let idCheck = sample.id;
-            let idCheckStr = idCheck.toString();
-            return idCheckStr === inputID;
-        }
-
-        let filteredSample = metaData.filter(selectSample);
-        // console.log(filteredSample);
-
-        let metaSample = filteredSample[0];
-        // console.log(metaSample);
-
-        let washFreq = metaSample.wfreq;
-        // console.log(washFreq); 
-
-        let traceSample = {
-            title: { 
-                text: "Belly Button Washing Frequency",
-                // text: "Scrubs per Week",
-                font: { 
-                    size: 30 
-                } 
-            },
-            domain: { x: [0, 1], y: [0, 1] },
-            value: washFreq,
-            type: "indicator",
-            mode: "gauge+number",
-            gauge: {
-                axis:{
-                    range: [null,9]
-                }
-            }            
-        };
-
-        let traceData = [traceSample];
-
-        let layout = {     
-            width: 600, 
-            height: 500 
-            // margin: { t: 0, b: 0 } 
-        };
-        
-        Plotly.newPlot("gauge", traceData, layout);
-
-    });
-}
-
-
 d3.selectAll("#selDataset").on("change", optionChanged)
 
 function optionChanged() {
@@ -225,7 +167,6 @@ function optionChanged() {
     hbarChart(newID);
     bubbleChart(newID);
     demoInfo(newID);
-    gaugeChart(newID);
 
 }
 
